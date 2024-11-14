@@ -18,13 +18,14 @@ const App = () => {
   useEffect(() => {
     
 
-       const urlParams = new URLSearchParams(window.location.search);
-       const urlCode = urlParams.get('roomCode')
-
-       if(urlCode){
-            setroomCode(urlCode)
-            socket.emit('join-room',(roomCode))
-       }
+     const urlParams = new URLSearchParams(window.location.search);
+    const urlCode = urlParams.get('roomCode');
+    
+    if (urlCode) {
+        setroomCode(urlCode);
+        joinRoom(urlCode);
+    }
+        
 
 
        socket.on('room-created',(roomCode) => {
@@ -65,7 +66,12 @@ const App = () => {
               socket.off('receive-message');
             };
   },[])
-
+  
+  const joinRoom = (roomCode) => {
+    if(roomCode){
+        socket.emit('join-room',roomCode)
+    }
+  }
 
   const handleRoomCreate = () => {
        if(roomCode.trim()){
@@ -91,7 +97,6 @@ const App = () => {
   }
 
   const joinUrl = `https://chat-rooms-simple.vercel.app?roomCode=${roomCode}`
-  console.log(chat,msg);
   
 
   return (
