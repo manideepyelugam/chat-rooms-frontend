@@ -46,7 +46,6 @@ const App = () => {
 
        socket.on('recieve-message',({msg,username,id}) => {
             setchat((prev) => [...prev,{id,username,msg}])
-            setmsg('')
        })
 
 
@@ -99,6 +98,8 @@ useEffect(() => {
       if(roomCode.trim() && username.trim()){
           socket.emit('send-message',({roomCode,msg,username}))
       }
+    setmsg('')
+
   }
 
   const deleteRoom = () => {
