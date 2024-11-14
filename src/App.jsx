@@ -15,6 +15,9 @@ const App = () => {
        const [isUsername,setisUsername] = useState(false);
        const [chat,setchat] = useState([]);
        const [msg,setmsg] = useState('');
+
+       const bottomRef = useRef(null);
+       
   useEffect(() => {
     
 
@@ -66,6 +69,12 @@ const App = () => {
               socket.off('receive-message');
             };
   },[])
+
+useEffect(() => {
+    if (bottomRef.current) {
+        bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+}, [chat]);
   
   const joinRoom = (roomCode) => {
     if(roomCode){
@@ -149,12 +158,25 @@ const App = () => {
                     
                         </div>
                      ))}
+                        <div ref={bottomRef} ></div>
+
 
               </div>
 
                         <div className="flex w-full  items-center space-x-2">
-                                 <Input className={"w-full"} value={msg} onChange={(e) => setmsg(e.target.value)} type="email" placeholder="your message here" />
-                                <Button  onClick={handleMessage} type="submit">Send</Button>
+   <Input
+    className="w-full"
+    value={msg}
+    onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();  // Prevents default Enter key behavior (e.g., submitting forms)
+            handleMessage();      // Calls the send message function
+        }
+    }}
+    onChange={(e) => setmsg(e.target.value)}
+    type="email"
+    placeholder="your message here"
+/>                                <Button  onClick={handleMessage} type="submit">Send</Button>
                           </div>
 
                 </div>
