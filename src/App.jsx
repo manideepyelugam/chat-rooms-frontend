@@ -90,7 +90,7 @@ const App = () => {
       socket.emit('delete',(roomCode))
   }
 
-  const joinUrl = `https://chat-rooms-backed-1.onrender?roomCode=${roomCode}`
+  const joinUrl = `https://chat-rooms-simple.vercel.app?roomCode=${roomCode}`
   console.log(chat,msg);
   
 
